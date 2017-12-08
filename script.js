@@ -1,4 +1,4 @@
-const levels = 4
+const levels = 3
 
 function initGame() {
     nextRound(0)
@@ -9,14 +9,20 @@ function nextRound(currentLevel) {
     let keys = generateKeys(levels)
 
     if (currentLevel == (levels)) {
-        setTimeout(() => alert("Ganaste"), 1000)
-        return
+        return swal({
+            title: "Ganaste!",
+            type: "success"
+        })
     }
 
-    alert(`Nivel ${currentLevel + 1}`)
+    swal({
+        timer: 1000,
+        title: `Nivel ${currentLevel + 1}`,
+        showConfirmButton: false
+    })
 
     for (let i = 0; i <= currentLevel; i++) {
-        setTimeout(() => activate(keys[i]), (i + 1) * 1000)
+        setTimeout(() => activate(keys[i]), (i + 2) * 1000)
     }
 
     let i = 0
@@ -37,7 +43,16 @@ function nextRound(currentLevel) {
         else {
             activate(e.keyCode, { fail: true })
             window.removeEventListener("keydown", onKeydown)
-            alert("Perdiste :(")
+            swal({
+                title: "Perdiste :(",
+                text: "¿Quieres jugar de nuevo?",
+                buttons: ["Si", "No"]
+            }, function(yes){
+                debugger;
+                if(yes){
+                    nextRound(0)
+                }
+            })
         }
     }
 }
