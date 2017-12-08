@@ -1,2 +1,2 @@
-#Simon say game
+# Simon say game
 Game for JavaStript practice
